@@ -44,5 +44,13 @@
 		"vite": "^6.2.6",
 		"vite-plugin-devtools-json": "^0.2.0",
 		"vitest": "^3.2.3"
+	},
+	"dependencies": {
+		"@dimforge/rapier3d-compat": "^0.17.3",
+		"@threlte/core": "^8.0.5",
+		"@threlte/extras": "^9.4.0",
+		"@threlte/rapier": "^3.1.4",
+		"@types/three": "^0.177.0",
+		"three": "^0.177.0"
 	}
 }
