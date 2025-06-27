@@ -1,15 +1,7 @@
 <script>
 	import { T } from '@threlte/core';
-	import { CameraControls, GLTF, useGltf } from '@threlte/extras';
-
-	const d6 = useGltf('/d6.glb');
-
-	$effect(() => {
-		(async () => {
-			const loaded = await $d6;
-			console.log({ loaded });
-		})();
-	});
+	import { CameraControls } from '@threlte/extras';
+	import D6 from './d6_v13/d6_v13.svelte';
 </script>
 
 <CameraControls />
@@ -20,4 +12,4 @@
 
 <T.AmbientLight />
 
-<GLTF url="/d6.glb" />
+<D6 />
