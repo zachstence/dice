@@ -2,16 +2,17 @@
 	import { T } from '@threlte/core';
 	import { CameraControls } from '@threlte/extras';
 	import D6 from './d6_v13/d6_v13.svelte';
+	import Table from './Table.svelte';
 </script>
 
-<T.AxesHelper args={[5]} />
+<T.AxesHelper args={[100]} />
 
+<T.PerspectiveCamera makeDefault position={[50, 150, 200]} />
 <CameraControls />
 
-<T.PerspectiveCamera makeDefault position={[10, 10, 10]} />
-
-<T.DirectionalLight position={[5, 10, 15]} castShadow />
-
+<T.DirectionalLight position={[-50, 150, 200]} castShadow />
 <T.AmbientLight />
 
-<D6 />
+<D6 position.y={5} />
+
+<Table />

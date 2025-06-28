@@ -17,13 +17,13 @@
 
 <T.Group {...props}>
 	{#if $gltf}
-		<T.Group dispose={false} rotation={[Math.PI / 2, 0, 0]} position={[-5, -5, -5]}>
+		<T.Group dispose={false} rotation.x={Math.PI / 2} position={[-5, -5, -5]}>
 			<T.Mesh geometry={body.geometry}>
-				<T.MeshBasicMaterial color="red" />
+				<T.MeshStandardMaterial color="red" />
 			</T.Mesh>
 			{#each pips as pip}
 				<T.Mesh geometry={pip.geometry}>
-					<T.MeshBasicMaterial color="white" />
+					<T.MeshStandardMaterial color="white" />
 				</T.Mesh>
 			{/each}
 		</T.Group>
