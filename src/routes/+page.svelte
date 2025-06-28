@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Canvas } from '@threlte/core';
+	import { Canvas, T } from '@threlte/core';
 	import { Debug, World } from '@threlte/rapier';
 	import Scene from '$lib/Scene.svelte';
 </script>
@@ -8,6 +8,7 @@
 	<Canvas>
 		<World>
 			<!-- <Debug /> -->
+			<!-- <T.AxesHelper args={[100]} /> -->
 			<Scene />
 		</World>
 	</Canvas>

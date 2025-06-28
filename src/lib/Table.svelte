@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { T } from '@threlte/core';
-	import { AutoColliders } from '@threlte/rapier';
+	import { Collider, RigidBody } from '@threlte/rapier';
 </script>
 
-<AutoColliders shape="cuboid">
-	<T.Mesh rotation.x={-Math.PI / 2} receiveShadow>
-		<T.PlaneGeometry args={[1000, 1000]} />
+<RigidBody type="fixed">
+	<Collider shape="cuboid" args={[0.5, 0.01, 0.5]} />
+	<T.Mesh receiveShadow>
+		<T.BoxGeometry args={[1, 0.02, 1]} />
 		<T.MeshStandardMaterial color="gray" />
 	</T.Mesh>
-</AutoColliders>
+</RigidBody>
