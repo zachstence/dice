@@ -1,8 +1,9 @@
-<script>
-	import { T } from '@threlte/core';
+<script lang="ts">
+	import { T, type Props } from '@threlte/core';
 	import { useGltf } from '@threlte/extras';
+	import type { Group } from 'three';
 
-	let { ref = $bindable() } = $props();
+	let props: Props<typeof Group> = $props();
 
 	const gltf = useGltf('/d6_v13.glb');
 
@@ -14,14 +15,14 @@
 	);
 </script>
 
-<T.Group bind:ref dispose={false}>
+<T.Group {...props}>
 	{#if $gltf}
-		<T.Group rotation={[Math.PI / 2, 0, 0]} scale={1}>
-			<T.Mesh geometry={body.geometry} scale={10}>
+		<T.Group dispose={false} rotation={[Math.PI / 2, 0, 0]} position={[-5, -5, -5]}>
+			<T.Mesh geometry={body.geometry}>
 				<T.MeshBasicMaterial color="red" />
 			</T.Mesh>
 			{#each pips as pip}
-				<T.Mesh geometry={pip.geometry} scale={10}>
+				<T.Mesh geometry={pip.geometry}>
 					<T.MeshBasicMaterial color="white" />
 				</T.Mesh>
 			{/each}
