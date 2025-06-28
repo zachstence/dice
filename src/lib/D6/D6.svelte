@@ -5,7 +5,7 @@
 	import type { Vector3Tuple } from 'three';
 	import type { d6_v13_GLTF } from './d6_v13.types';
 
-	type Props = {
+	export type D6Props = {
 		bodyColor: string;
 		pipColor: string;
 		initialPosition?: Vector3Tuple;
@@ -20,7 +20,7 @@
 		initialRotation,
 		initialLinearVelocity,
 		initialAngularVelocity
-	}: Props = $props();
+	}: D6Props = $props();
 
 	const gltf = useGltf<d6_v13_GLTF>('/d6_v13.glb');
 
@@ -30,33 +30,44 @@
 			.filter(([name]) => name.startsWith('Pip'))
 			.map(([_, pip]) => pip)
 	);
+
+	const key = $derived(
+		JSON.stringify({
+			initialPosition,
+			initialRotation,
+			initialLinearVelocity,
+			initialAngularVelocity
+		})
+	);
 </script>
 
 {#if $gltf}
-	<T.Group
-		position={initialPosition ?? [0, 0, 0]}
-		rotation={initialRotation ?? [0, 0, 0]}
-		dispose={false}
-	>
-		<RigidBody
-			type="dynamic"
-			ccd
-			linearVelocity={initialLinearVelocity}
-			angularVelocity={initialAngularVelocity}
+	{#key key}
+		<T.Group
+			position={initialPosition ?? [0, 0, 0]}
+			rotation={initialRotation ?? [0, 0, 0]}
+			dispose={false}
 		>
-			<Collider shape="cuboid" args={[0.005, 0.005, 0.005]} restitution={0.4} friction={0.5} />
-			<T.Group rotation.x={Math.PI / 2} position={[-0.005, -0.005, -0.005]} scale={0.001}>
-				{#if body}
-					<T.Mesh geometry={body.geometry}>
-						<T.MeshStandardMaterial color={bodyColor} />
-					</T.Mesh>
-				{/if}
-				{#each pips as pip}
-					<T.Mesh geometry={pip.geometry}>
-						<T.MeshStandardMaterial color={pipColor} />
-					</T.Mesh>
-				{/each}
-			</T.Group>
-		</RigidBody>
-	</T.Group>
+			<RigidBody
+				type="dynamic"
+				ccd
+				linearVelocity={initialLinearVelocity}
+				angularVelocity={initialAngularVelocity}
+			>
+				<Collider shape="cuboid" args={[0.05, 0.05, 0.05]} restitution={0.2} friction={0.5} />
+				<T.Group rotation.x={Math.PI / 2} position={[-0.05, -0.05, -0.05]} scale={0.01}>
+					{#if body}
+						<T.Mesh geometry={body.geometry}>
+							<T.MeshStandardMaterial color={bodyColor} />
+						</T.Mesh>
+					{/if}
+					{#each pips as pip}
+						<T.Mesh geometry={pip.geometry}>
+							<T.MeshStandardMaterial color={pipColor} />
+						</T.Mesh>
+					{/each}
+				</T.Group>
+			</RigidBody>
+		</T.Group>
+	{/key}
 {/if}
