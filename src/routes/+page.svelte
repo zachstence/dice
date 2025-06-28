@@ -7,7 +7,7 @@
 <div class="h-screen w-screen">
 	<Canvas>
 		<World>
-			<Debug />
+			<!-- <Debug /> -->
 			<Scene />
 		</World>
 	</Canvas>

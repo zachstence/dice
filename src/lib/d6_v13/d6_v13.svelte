@@ -1,11 +1,15 @@
 <script lang="ts">
-	import { T, type Props } from '@threlte/core';
+	import { T, type Props as ThrelteProps } from '@threlte/core';
 	import { useGltf } from '@threlte/extras';
 	import { AutoColliders, RigidBody } from '@threlte/rapier';
 	import type { Group } from 'three';
 	import type { d6_v13_GLTF } from './d6_v13.types';
 
-	let props: Props<typeof Group> = $props();
+	type Props = ThrelteProps<typeof Group> & {
+		bodyColor: string;
+		pipColor: string;
+	};
+	let { bodyColor, pipColor, ...props }: Props = $props();
 
 	const gltf = useGltf<d6_v13_GLTF>('/d6_v13.glb');
 
@@ -24,12 +28,12 @@
 				<T.Group dispose={false} rotation.x={Math.PI / 2} position={[-5, -5, -5]}>
 					{#if body}
 						<T.Mesh geometry={body.geometry}>
-							<T.MeshStandardMaterial color="red" />
+							<T.MeshStandardMaterial color={bodyColor} />
 						</T.Mesh>
 					{/if}
 					{#each pips as pip}
 						<T.Mesh geometry={pip.geometry}>
-							<T.MeshStandardMaterial color="white" />
+							<T.MeshStandardMaterial color={pipColor} />
 						</T.Mesh>
 					{/each}
 				</T.Group>

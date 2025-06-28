@@ -13,6 +13,7 @@
 <T.DirectionalLight position={[-50, 150, 200]} castShadow />
 <T.AmbientLight />
 
-<D6 position.y={5} />
+<D6 position={[-8, 5, 0]} bodyColor="red" pipColor="white" />
+<D6 position={[8, 5, 0]} bodyColor="blue" pipColor="white" />
 
 <Table />
