@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { T, type Props } from '@threlte/core';
 	import { useGltf } from '@threlte/extras';
+	import { AutoColliders, RigidBody } from '@threlte/rapier';
 	import type { Group } from 'three';
 
 	let props: Props<typeof Group> = $props();
@@ -15,17 +16,21 @@
 	);
 </script>
 
-<T.Group {...props}>
-	{#if $gltf}
-		<T.Group dispose={false} rotation.x={Math.PI / 2} position={[-5, -5, -5]}>
-			<T.Mesh geometry={body.geometry}>
-				<T.MeshStandardMaterial color="red" />
-			</T.Mesh>
-			{#each pips as pip}
-				<T.Mesh geometry={pip.geometry}>
-					<T.MeshStandardMaterial color="white" />
-				</T.Mesh>
-			{/each}
-		</T.Group>
-	{/if}
-</T.Group>
+{#if $gltf}
+	<T.Group {...props}>
+		<RigidBody type="dynamic">
+			<AutoColliders shape="trimesh">
+				<T.Group dispose={false} rotation.x={Math.PI / 2} position={[-5, -5, -5]}>
+					<T.Mesh geometry={body.geometry}>
+						<T.MeshStandardMaterial color="red" />
+					</T.Mesh>
+					{#each pips as pip}
+						<T.Mesh geometry={pip.geometry}>
+							<T.MeshStandardMaterial color="white" />
+						</T.Mesh>
+					{/each}
+				</T.Group>
+			</AutoColliders>
+		</RigidBody>
+	</T.Group>
+{/if}
