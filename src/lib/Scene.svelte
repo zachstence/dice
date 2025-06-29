@@ -5,6 +5,8 @@
 	import Table from './Table.svelte';
 	import type { Vector3Tuple } from 'three';
 	import type { D6Props } from './D6/D6.svelte';
+	import { randomSignedInRange } from './randomSignedInRange';
+	import { randomInRange } from './randomInRange';
 
 	export type SceneRef = {
 		roll: () => void;
@@ -26,31 +28,33 @@
 		}
 	};
 
-	const DIE_SIZE = 0.1; // 1cm for reference
-
-	// Small offset from origin to avoid perfect symmetry
 	export const getRandomPosition = (): Vector3Tuple => {
-		const range = DIE_SIZE * 3;
-		return [(Math.random() - 0.5) * range, DIE_SIZE * 20, (Math.random() - 0.5) * range];
+		return [randomSignedInRange(0, 0.1), randomInRange(1.8, 2), randomSignedInRange(0, 0.1)];
 	};
 
-	// Random initial orientation
 	export const getRandomRotation = (): Vector3Tuple => {
-		return [Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2];
+		const minRotation = Math.PI / 4;
+		const maxRotation = (7 * Math.PI) / 4;
+		return [
+			randomInRange(minRotation, maxRotation),
+			randomInRange(minRotation, maxRotation),
+			randomInRange(minRotation, maxRotation)
+		];
 	};
 
-	// Forward-ish linear velocity with some randomness
 	export const getRandomLinearVelocity = (): Vector3Tuple => {
-		const baseSpeed = 0.5; // meters per second
-		return [(Math.random() - 0.5) * baseSpeed, 0, (Math.random() - 0.5) * baseSpeed];
+		const minSpeed = 0.4;
+		const maxSpeed = 0.8;
+		return [randomSignedInRange(minSpeed, maxSpeed), 0, randomSignedInRange(minSpeed, maxSpeed)];
 	};
 
 	export const getRandomAngularVelocity = (): Vector3Tuple => {
-		const maxSpin = 5; // radians/sec
+		const minSpin = 10;
+		const maxSpin = 15;
 		return [
-			(Math.random() - 0.5) * maxSpin,
-			(Math.random() - 0.5) * maxSpin,
-			(Math.random() - 0.5) * maxSpin
+			randomSignedInRange(minSpin, maxSpin),
+			randomSignedInRange(minSpin, maxSpin),
+			randomSignedInRange(minSpin, maxSpin)
 		];
 	};
 
@@ -65,8 +69,9 @@
 <T.PerspectiveCamera makeDefault position={[0.5, 1, 1.5]} near={0.001} />
 <CameraControls />
 
-<T.DirectionalLight position={[-5, 15, 20]} castShadow />
-<T.AmbientLight />
+<T.DirectionalLight position={[0.1, 3, 0.1]} intensity={1} castShadow />
+<T.DirectionalLight position={[0.8, 1, 0.6]} intensity={0.2} castShadow />
+<T.AmbientLight intensity={0.7} />
 
 {#if d6Props}
 	<D6 {...d6Props} bodyColor="red" pipColor="white" />

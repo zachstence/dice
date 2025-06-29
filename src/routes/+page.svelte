@@ -16,8 +16,8 @@
 
 <div class="h-screen w-screen">
 	<Canvas>
-		<World gravity={[0, -2, 0]}>
-			<Debug />
+		<World framerate={120}>
+			<!-- <Debug /> -->
 			<!-- <T.AxesHelper args={[100]} /> -->
 			<Scene bind:ref={sceneRef} />
 		</World>

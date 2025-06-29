@@ -47,6 +47,7 @@
 			position={initialPosition ?? [0, 0, 0]}
 			rotation={initialRotation ?? [0, 0, 0]}
 			dispose={false}
+			castShadow
 		>
 			<RigidBody
 				type="dynamic"
@@ -57,12 +58,12 @@
 				<Collider shape="cuboid" args={[0.05, 0.05, 0.05]} restitution={0.2} friction={0.5} />
 				<T.Group rotation.x={Math.PI / 2} position={[-0.05, -0.05, -0.05]} scale={0.01}>
 					{#if body}
-						<T.Mesh geometry={body.geometry}>
+						<T.Mesh geometry={body.geometry} castShadow>
 							<T.MeshStandardMaterial color={bodyColor} />
 						</T.Mesh>
 					{/if}
 					{#each pips as pip}
-						<T.Mesh geometry={pip.geometry}>
+						<T.Mesh geometry={pip.geometry} castShadow>
 							<T.MeshStandardMaterial color={pipColor} />
 						</T.Mesh>
 					{/each}
