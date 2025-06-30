@@ -33,12 +33,18 @@
 			<T.Group rotation.x={Math.PI / 2} position={[-0.05, -0.05, -0.05]} scale={0.01}>
 				{#if body}
 					<T.Mesh geometry={body.geometry} castShadow>
-						<T.MeshStandardMaterial color={model.bodyColor} />
+						<T.MeshStandardMaterial
+							color={model.bodyColor}
+							roughness={0.4}
+							metalness={0.0}
+							clearcoat={0.1}
+							clearcoatRoughness={0.3}
+						/>
 					</T.Mesh>
 				{/if}
 				{#each pips as pip}
 					<T.Mesh geometry={pip.geometry} castShadow>
-						<T.MeshStandardMaterial color={model.pipColor} />
+						<T.MeshStandardMaterial color={model.pipColor} roughness={0.6} metalness={0.0} />
 					</T.Mesh>
 				{/each}
 			</T.Group>
