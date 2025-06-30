@@ -1,7 +1,9 @@
+import { almostEqual } from '$lib/almostEqual';
 import { randomInRange } from '$lib/randomInRange';
 import { randomSignedInRange } from '$lib/randomSignedInRange';
 import { RigidBody } from '@dimforge/rapier3d-compat';
-import { Euler, Quaternion } from 'three';
+import { Euler, Matrix4, Quaternion, Vector3 } from 'three';
+import { NORMALS } from './normals';
 
 export type D6ModelArgs = {
 	bodyColor: string;
@@ -21,9 +23,15 @@ export class D6Model {
 		return this.#isSleeping;
 	}
 
+	get value() {
+		return this.#value;
+	}
+
 	#rigidBody?: RigidBody;
 
 	#isSleeping: boolean | undefined = $state();
+
+	#value: 1 | 2 | 3 | 4 | 5 | 6 | undefined = $state();
 
 	constructor(private readonly args: D6ModelArgs) {}
 
@@ -33,7 +41,9 @@ export class D6Model {
 	};
 
 	onRigidBodySleep = (): void => {
+		if (!this.#rigidBody) return;
 		this.#isSleeping = true;
+		this.#value = this.findValue();
 	};
 
 	onRigidBodyWake = (): void => {
@@ -85,5 +95,23 @@ export class D6Model {
 			},
 			true
 		);
+	};
+
+	findValue = (): 1 | 2 | 3 | 4 | 5 | 6 | undefined => {
+		if (!this.#rigidBody) return undefined;
+
+		const q = this.#rigidBody.rotation();
+		const matrix = new Matrix4().makeRotationFromQuaternion(new Quaternion(q.x, q.y, q.z, q.w));
+
+		const up = NORMALS.find((normal) => {
+			const worldNormal = normal.normal.clone().applyMatrix4(matrix).normalize();
+			return (
+				almostEqual(worldNormal.x, 0, 2) &&
+				almostEqual(worldNormal.y, 1, 2) &&
+				almostEqual(worldNormal.z, 0, 2)
+			);
+		});
+
+		return up?.value;
 	};
 }

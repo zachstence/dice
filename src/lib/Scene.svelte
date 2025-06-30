@@ -35,6 +35,25 @@
 			defendingDice.forEach((d6) => d6.roll());
 		}
 	};
+
+	$effect(() => {
+		const allSleeping =
+			attackingDice.every((d) => d.isSleeping) && defendingDice.every((d) => d.isSleeping);
+		if (!allSleeping) return;
+
+		const attacking = attackingDice
+			.map((d) => d.value)
+			.sort()
+			.reverse()
+			.join(' ');
+		const defending = defendingDice
+			.map((d) => d.value)
+			.sort()
+			.reverse()
+			.join(' ');
+
+		console.log(`${attacking}   vs   ${defending}`);
+	});
 </script>
 
 <T.PerspectiveCamera makeDefault position={[0.5, 1, 1.5]} near={0.001} />
