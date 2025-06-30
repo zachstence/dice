@@ -13,14 +13,26 @@
 	};
 	let { ref = $bindable() }: Props = $props();
 
-	const model = new D6Model({
-		bodyColor: 'red',
-		pipColor: 'white'
-	});
+	const attackingDice = Array.from({ length: 3 }).map(
+		() =>
+			new D6Model({
+				bodyColor: 'red',
+				pipColor: 'white'
+			})
+	);
+
+	const defendingDice = Array.from({ length: 2 }).map(
+		() =>
+			new D6Model({
+				bodyColor: 'blue',
+				pipColor: 'white'
+			})
+	);
 
 	ref = {
 		roll: () => {
-			model.roll();
+			attackingDice.forEach((d6) => d6.roll());
+			defendingDice.forEach((d6) => d6.roll());
 		}
 	};
 </script>
@@ -32,6 +44,11 @@
 <T.DirectionalLight position={[0.8, 1, 0.6]} intensity={0.2} castShadow />
 <T.AmbientLight intensity={0.7} />
 
-<D6 {model} />
+{#each attackingDice as model}
+	<D6 {model} />
+{/each}
+{#each defendingDice as model}
+	<D6 {model} />
+{/each}
 
 <Table />
