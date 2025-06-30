@@ -42,8 +42,24 @@ export class D6Model {
 
 	onRigidBodySleep = (): void => {
 		if (!this.#rigidBody) return;
-		this.#isSleeping = true;
+
 		this.#value = this.findValue();
+		if (!this.#value) {
+			this.#rigidBody.addForce(
+				{
+					x: 0,
+					y: -0.5,
+					z: 0
+				},
+				true
+			);
+			setTimeout(() => {
+				this.#rigidBody?.resetForces(true);
+			}, 100);
+			return;
+		}
+
+		this.#isSleeping = true;
 	};
 
 	onRigidBodyWake = (): void => {

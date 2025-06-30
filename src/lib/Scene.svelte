@@ -13,7 +13,7 @@
 	};
 	let { ref = $bindable() }: Props = $props();
 
-	const attackingDice = Array.from({ length: 3 }).map(
+	const attackingDice = Array.from({ length: 10 }).map(
 		() =>
 			new D6Model({
 				bodyColor: 'red',
@@ -21,7 +21,7 @@
 			})
 	);
 
-	const defendingDice = Array.from({ length: 2 }).map(
+	const defendingDice = Array.from({ length: 10 }).map(
 		() =>
 			new D6Model({
 				bodyColor: 'blue',
@@ -42,12 +42,12 @@
 		if (!allSleeping) return;
 
 		const attacking = attackingDice
-			.map((d) => d.value)
+			.map((d) => d.value ?? '?')
 			.sort()
 			.reverse()
 			.join(' ');
 		const defending = defendingDice
-			.map((d) => d.value)
+			.map((d) => d.value ?? '?')
 			.sort()
 			.reverse()
 			.join(' ');
