@@ -18,7 +18,7 @@
 	<Canvas>
 		<World framerate={120}>
 			<!-- <Debug /> -->
-			<T.AxesHelper args={[100]} />
+			<!-- <T.AxesHelper args={[100]} /> -->
 			<Scene bind:ref={sceneRef} />
 		</World>
 	</Canvas>
